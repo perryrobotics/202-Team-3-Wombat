@@ -5,17 +5,17 @@ K=ctypes.CDLL("/usr/lib/libkipr.so")
 from line_following import *
 from library import *
 from mm_dist import *
-from get_container import *
-from move_container import *
-from to_ramp import *
 from thresh import *
-from on_ramp import *
+from get_container_new import *
+from up_ramp import *
+from getting_palms import *
 
 K.enable_servos()
-arm_back(70)
-elbow_back(70)
-close_claw(70)
+arm_back(10)
+elbow_back(10)
+close_claw(10)
 up_back(70)
-K.msleep(1000)
-get_container()
-to_ramp()
+    
+get_container_new()
+up_ramp()
+getting_palms()

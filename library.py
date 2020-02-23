@@ -8,20 +8,20 @@ Rmotor = 0
     
 Arm = 0
 Arm_back = 0
-Arm_block = 200
+Arm_part = 400
 Arm_up = 700
-Arm_down = 2040
-Arm_under = 1400
-Arm_transport = 900
+Arm_down = 1500
+Arm_almost = 1200
+Arm_mostly = 1400
     
 Elbow = 1
-Elbow_normal = 1400
+Elbow_normal = 1500
 Elbow_out = 0
 Elbow_back = 2040
     
 Claw = 2
 Claw_open = 1050
-Claw_half = 500
+Claw_half = 700
 Claw_close = 0
 
 Back = 3
@@ -74,8 +74,8 @@ def arm_back(step):
 	move_servo_slow(Arm, K.get_servo_position(Arm), Arm_back, step)
 	K.msleep(500)
         
-def arm_block(step):
-	move_servo_slow(Arm, K.get_servo_position(Arm), Arm_block, step)
+def arm_part(step):
+	move_servo_slow(Arm, K.get_servo_position(Arm), Arm_part, step)
 	K.msleep(500)
     
 def arm_up(step):
@@ -86,12 +86,12 @@ def arm_down(step):
 	move_servo_slow(Arm, K.get_servo_position(Arm), Arm_down, step)
 	K.msleep(500)
         
-def arm_transport(step):
-	move_servo_slow(Arm, K.get_servo_position(Arm), Arm_transport, step)
+def arm_almost(step):
+	move_servo_slow(Arm, K.get_servo_position(Arm), Arm_almost, step)
 	K.msleep(500)
         
-def arm_under(step):
-	move_servo_slow(Arm, K.get_servo_position(Arm), Arm_under, step)
+def arm_mostly(step):
+	move_servo_slow(Arm, K.get_servo_position(Arm), Arm_mostly, step)
 	K.msleep(500)
 ############################
         
