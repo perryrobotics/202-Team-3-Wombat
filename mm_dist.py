@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import os, sys
-import ctypes
-K=ctypes.CDLL("/usr/lib/libkipr.so")
+from wallaby import *
+
 import math as m
     
 LM = 0
@@ -17,55 +17,63 @@ circ_of_base = pi * base
 mm_per_deg = circ_of_base / 360
 
 def forward_mm(speed, dist):
-	K.cmpc(LM)
-	K.cmpc(RM)
+	cmpc(LM)
+	cmpc(RM)
 	total_ticks= (float(dist)/WHEEL_CIRC_MM)*TICKS_PER_ROT
-	K.mrp(LM, speed, int(total_ticks))
-	K.mrp(RM, speed, int(total_ticks))
-	K.bmd(RM)
-	K.ao()
+	mav(LM, speed)
+	mav(RM, speed)
+	while gmpc(LM) < total_ticks:
+		pass
+	ao()
 
 def back_mm(speed, dist):
-	K.cmpc(LM)
-	K.cmpc(RM)
+	cmpc(LM)
+	cmpc(RM)
 	total_ticks= (float(dist)/WHEEL_CIRC_MM)*TICKS_PER_ROT
-	K.mrp(LM, -speed, -int(total_ticks))
-	K.mrp(RM, -speed, -int(total_ticks))
-	K.bmd(RM)
-	K.ao()
+	mav(LM, -speed)
+	mav(RM, -speed)
+	while gmpc(LM) > -total_ticks:
+		pass
+	ao()
 
 def left_mm(speed, dist):
-	K.cmpc(LM)
-	K.cmpc(RM)
+	cmpc(LM)
+	cmpc(RM)
 	total_ticks= (float(dist)/WHEEL_CIRC_MM)*TICKS_PER_ROT
-	K.mrp(RM, speed, int(total_ticks))
-	K.bmd(RM)
-	K.ao()
+	mav(LM, -speed)
+	mav(RM, speed)
+	while gmpc(RM) < total_ticks:
+		pass
+	ao()
 
 def right_mm(speed, dist):
-	K.cmpc(LM)
-	K.cmpc(RM)
+	cmpc(LM)
+	cmpc(RM)
 	total_ticks= (float(dist)/WHEEL_CIRC_MM)*TICKS_PER_ROT
-	K.mrp(LM, speed, int(total_ticks))
-	K.bmd(LM)
-	K.ao()
+	mav(LM, speed)
+	mav(RM, -speed)
+	while gmpc(LM) < total_ticks:
+		pass
+	ao()
 
 def turn_left(speed, deg):
 	mm_to_go = 0.0
 	print(deg)
-	K.cmpc(LM)
-	K.cmpc(RM)
+	cmpc(LM)
+	cmpc(RM)
 	mm_to_go = 1920*( (3.25/1.375)*(float(deg)/360) )
-	K.mrp(RM,int(speed) ,-int(mm_to_go))
-	K.mrp(LM, int(speed) ,int(mm_to_go))
-	K.bmd(RM)
-	K.ao()
+	mav(LM, -speed)
+	mav(RM, speed)
+	while gmpc(RM) < mm_to_go:
+		pass
+	ao()
 
 def turn_right(speed, deg):
-	K.cmpc(LM)
-	K.cmpc(RM)
+	cmpc(LM)
+	cmpc(RM)
 	mm_to_go = 1920*((3.25/1.375)*(float(deg)/360))
-	K.mrp(LM, speed, -int(mm_to_go))
-	K.mrp(RM, speed, int(mm_to_go))
-	K.bmd(RM)
-	K.ao()
+	mav(LM, speed)
+	mav(RM, -speed)
+	while gmpc(LM) < mm_to_go:
+		pass
+	ao()
